@@ -26,7 +26,7 @@ export default function FAQAccordion({ faqs }: FAQAccordionProps) {
             key={faq.id}
             className={`rounded-xl border transition-all duration-200 ${
               isOpen
-                ? "border-indigo-200 bg-indigo-50/50 shadow-sm"
+                ? "border-orange-200 bg-orange-50/50 shadow-sm"
                 : "border-slate-200 bg-white hover:border-slate-300"
             }`}
           >
@@ -39,7 +39,7 @@ export default function FAQAccordion({ faqs }: FAQAccordionProps) {
                 {faq.question}
               </span>
               <span
-                className={`flex-shrink-0 text-xl text-indigo-500 transition-transform duration-200 ${
+                className={`flex-shrink-0 text-xl text-orange-500 transition-transform duration-200 ${
                   isOpen ? "rotate-45" : ""
                 }`}
               >

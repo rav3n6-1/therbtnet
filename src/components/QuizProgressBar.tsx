@@ -21,7 +21,7 @@ export default function QuizProgressBar({ current, total, answered }: QuizProgre
       <div className="relative h-2 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
         {/* Answered Progress bar */}
         <div
-          className="absolute inset-y-0 left-0 bg-indigo-600 dark:bg-indigo-500 transition-all duration-300 rounded-full"
+          className="absolute inset-y-0 left-0 bg-orange-600 dark:bg-orange-500 transition-all duration-300 rounded-full"
           style={{ width: `${progressPercent}%` }}
         />
       </div>

@@ -46,7 +46,7 @@ export default function ReviewAnswers({ questions, answers, onBack }: ReviewAnsw
               onClick={() => setFilter('all')}
               className={`rounded-lg px-4 py-1.5 text-xs font-semibold transition-all ${
                 filter === 'all'
-                  ? 'bg-white dark:bg-slate-800 shadow-sm text-indigo-600 dark:text-indigo-400'
+                  ? 'bg-white dark:bg-slate-800 shadow-sm text-orange-600 dark:text-orange-400'
                   : 'text-slate-500 hover:text-slate-950 dark:hover:text-white'
               }`}
             >
@@ -56,7 +56,7 @@ export default function ReviewAnswers({ questions, answers, onBack }: ReviewAnsw
               onClick={() => setFilter('incorrect')}
               className={`rounded-lg px-4 py-1.5 text-xs font-semibold transition-all ${
                 filter === 'incorrect'
-                  ? 'bg-white dark:bg-slate-800 shadow-sm text-indigo-600 dark:text-indigo-400'
+                  ? 'bg-white dark:bg-slate-800 shadow-sm text-orange-600 dark:text-orange-400'
                   : 'text-slate-500 hover:text-slate-950 dark:hover:text-white'
               }`}
             >
@@ -145,7 +145,7 @@ export default function ReviewAnswers({ questions, answers, onBack }: ReviewAnsw
 
                 {/* Explanatory notes */}
                 <div className="rounded-xl bg-slate-50 dark:bg-slate-800/40 p-4 border border-slate-100 dark:border-slate-800">
-                  <h5 className="text-xs font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider">
+                  <h5 className="text-xs font-bold text-orange-600 dark:text-orange-400 uppercase tracking-wider">
                     Rationale
                   </h5>
                   <p className="mt-1 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">

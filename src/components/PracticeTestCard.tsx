@@ -55,7 +55,7 @@ export default function PracticeTestCard({ exam }: PracticeTestCardProps) {
       <div className="mt-6">
         <Link
           href={`/practice-tests/${exam.slug}`}
-          className="block w-full text-center bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl py-3 px-4 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2"
+          className="block w-full text-center bg-orange-600 hover:bg-orange-700 text-white rounded-xl py-3 px-4 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2"
         >
           {completed ? 'Retake Practice Test' : 'Start Practice Test'}
         </Link>

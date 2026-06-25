@@ -15,12 +15,12 @@ export default function StudyGuideLayout({ guide }: StudyGuideLayoutProps) {
   return (
     <article className="space-y-8">
       {/* Header */}
-      <header className="rounded-2xl bg-gradient-to-br from-indigo-600 to-indigo-800 px-8 py-10 text-white shadow-lg">
+      <header className="rounded-2xl bg-gradient-to-br from-orange-600 to-orange-800 px-8 py-10 text-white shadow-lg">
         <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
           {guide.title}
         </h1>
-        <p className="mt-3 text-lg text-indigo-100">{guide.description}</p>
-        <div className="mt-4 flex flex-wrap items-center gap-4 text-sm text-indigo-200">
+        <p className="mt-3 text-lg text-orange-100">{guide.description}</p>
+        <div className="mt-4 flex flex-wrap items-center gap-4 text-sm text-orange-200">
           <span className="inline-flex items-center gap-1.5">
             <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />

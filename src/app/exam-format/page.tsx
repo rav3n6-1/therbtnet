@@ -66,19 +66,19 @@ export default function ExamFormatPage() {
           We recommend a structured preparation sequence to maximize conceptual clarity:
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-2">
-          <div className="space-y-2 border-l-2 border-indigo-500 pl-4">
+          <div className="space-y-2 border-l-2 border-orange-500 pl-4">
             <h4 className="font-bold text-slate-800 dark:text-white text-sm">1. Target Domains</h4>
             <p className="text-xs text-slate-500 dark:text-slate-400">
               Read study guides and take domain quizzes (e.g. Measurement) to clarify rules.
             </p>
           </div>
-          <div className="space-y-2 border-l-2 border-indigo-500 pl-4">
+          <div className="space-y-2 border-l-2 border-orange-500 pl-4">
             <h4 className="font-bold text-slate-800 dark:text-white text-sm">2. Simulate Exams</h4>
             <p className="text-xs text-slate-500 dark:text-slate-400">
               Complete the timed mock exam simulator to build focus and study pacing.
             </p>
           </div>
-          <div className="space-y-2 border-l-2 border-indigo-500 pl-4">
+          <div className="space-y-2 border-l-2 border-orange-500 pl-4">
             <h4 className="font-bold text-slate-800 dark:text-white text-sm">3. conceptual rationales</h4>
             <p className="text-xs text-slate-500 dark:text-slate-400">
               Review all rationale explanations for both correct and incorrect choices.

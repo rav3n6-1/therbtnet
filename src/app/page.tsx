@@ -77,28 +77,28 @@ export default function Home() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           <div className="space-y-3">
-            <span className="inline-flex w-8 h-8 rounded-full bg-indigo-600 text-white font-bold text-sm items-center justify-center">1</span>
+            <span className="inline-flex w-8 h-8 rounded-full bg-orange-600 text-white font-bold text-sm items-center justify-center">1</span>
             <h3 className="font-bold text-slate-800 dark:text-white">Learn Concepts</h3>
             <p className="text-sm text-slate-500 dark:text-slate-400">
               Read through our detailed study guides aligned with behavior analysis concepts.
             </p>
           </div>
           <div className="space-y-3">
-            <span className="inline-flex w-8 h-8 rounded-full bg-indigo-600 text-white font-bold text-sm items-center justify-center">2</span>
+            <span className="inline-flex w-8 h-8 rounded-full bg-orange-600 text-white font-bold text-sm items-center justify-center">2</span>
             <h3 className="font-bold text-slate-800 dark:text-white">Practice Items</h3>
             <p className="text-sm text-slate-500 dark:text-slate-400">
               Take practice questions and receive immediate conceptual feedback and rationales.
             </p>
           </div>
           <div className="space-y-3">
-            <span className="inline-flex w-8 h-8 rounded-full bg-indigo-600 text-white font-bold text-sm items-center justify-center">3</span>
+            <span className="inline-flex w-8 h-8 rounded-full bg-orange-600 text-white font-bold text-sm items-center justify-center">3</span>
             <h3 className="font-bold text-slate-800 dark:text-white">Review Weaknesses</h3>
             <p className="text-sm text-slate-500 dark:text-slate-400">
               Use topic-specific breakdowns and targeted quizzes to address knowledge gaps.
             </p>
           </div>
           <div className="space-y-3">
-            <span className="inline-flex w-8 h-8 rounded-full bg-indigo-600 text-white font-bold text-sm items-center justify-center">4</span>
+            <span className="inline-flex w-8 h-8 rounded-full bg-orange-600 text-white font-bold text-sm items-center justify-center">4</span>
             <h3 className="font-bold text-slate-800 dark:text-white">Simulate Exams</h3>
             <p className="text-sm text-slate-500 dark:text-slate-400">
               Build test-taking endurance with our timed mock exam simulator.
@@ -118,7 +118,7 @@ export default function Home() {
               Focus on specific content areas defined in the RBT Test Content Outline.
             </p>
           </div>
-          <Link href="/topic-quizzes" className="text-sm font-semibold text-indigo-600 dark:text-indigo-400 hover:underline">
+          <Link href="/topic-quizzes" className="text-sm font-semibold text-orange-600 dark:text-orange-400 hover:underline">
             View All Topics →
           </Link>
         </div>
@@ -130,21 +130,21 @@ export default function Home() {
       </section>
 
       {/* Mock Exam CTA */}
-      <section className="rounded-3xl bg-indigo-900 border border-indigo-950 p-8 sm:p-12 text-white flex flex-col md:flex-row items-center justify-between gap-8 shadow-lg">
+      <section className="rounded-3xl bg-slate-900 border border-slate-950 p-8 sm:p-12 text-white flex flex-col md:flex-row items-center justify-between gap-8 shadow-lg">
         <div className="space-y-4 max-w-xl">
-          <span className="inline-flex items-center gap-1 bg-indigo-500/20 border border-indigo-400/30 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider text-indigo-200">
+          <span className="inline-flex items-center gap-1 bg-orange-500/10 border border-orange-500/20 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider text-orange-400">
             ⏳ Full Exam Simulation
           </span>
           <h2 className="text-2xl sm:text-3xl font-extrabold leading-tight">
             Ready to simulate the exam?
           </h2>
-          <p className="text-indigo-200 text-sm sm:text-base leading-relaxed">
+          <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
             Our timed mock exam simulator represents the structure of the RBT Test Content Outline. All questions are original practice items.
           </p>
         </div>
         <Link
           href="/mock-exam"
-          className="w-full md:w-auto bg-white text-indigo-900 font-semibold px-8 py-4 rounded-xl text-center shadow-md hover:bg-slate-50 transition-colors"
+          className="w-full md:w-auto bg-orange-600 text-white hover:bg-orange-700 font-semibold px-8 py-4 rounded-xl text-center shadow-md transition-colors"
         >
           Start Mock Exam
         </Link>
@@ -162,7 +162,7 @@ export default function Home() {
         </div>
         <FAQAccordion faqs={previewFaqs} />
         <div className="text-center pt-4">
-          <Link href="/faq" className="text-sm font-semibold text-indigo-600 dark:text-indigo-400 hover:underline">
+          <Link href="/faq" className="text-sm font-semibold text-orange-600 dark:text-orange-400 hover:underline">
             View All FAQs →
           </Link>
         </div>

@@ -42,7 +42,7 @@ export default function StudyGuidePage() {
                 <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold uppercase tracking-wider bg-slate-100 dark:bg-slate-800 text-slate-850 dark:text-slate-205">
                   {guide.estimatedReadTime} Read
                 </span>
-                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold uppercase tracking-wider bg-indigo-50 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-400">
+                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold uppercase tracking-wider bg-orange-50 dark:bg-orange-950/40 text-orange-700 dark:text-orange-400">
                   {guide.status}
                 </span>
               </div>
@@ -60,7 +60,7 @@ export default function StudyGuidePage() {
             <div className="mt-6">
               <Link
                 href={`/study-guide/${guide.slug}`}
-                className="block w-full text-center bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl py-3 px-4 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+                className="block w-full text-center bg-orange-600 hover:bg-orange-700 text-white rounded-xl py-3 px-4 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
               >
                 Read Study Guide
               </Link>

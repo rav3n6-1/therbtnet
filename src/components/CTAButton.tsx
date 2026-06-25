@@ -21,9 +21,9 @@ export default function CTAButton({
     "inline-flex items-center justify-center rounded-lg px-6 py-3 text-sm font-semibold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2";
   const variants = {
     primary:
-      "bg-indigo-600 text-white shadow-md hover:bg-indigo-700 hover:shadow-lg focus:ring-indigo-500 active:bg-indigo-800",
+      "bg-orange-600 text-white shadow-md hover:bg-orange-700 hover:shadow-lg focus:ring-orange-500 active:bg-orange-800",
     secondary:
-      "border border-indigo-200 bg-white text-indigo-600 hover:bg-indigo-50 hover:border-indigo-300 focus:ring-indigo-500",
+      "border border-orange-200 bg-white text-orange-600 hover:bg-orange-50 hover:border-orange-300 focus:ring-orange-500",
   };
 
   return (

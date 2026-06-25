@@ -32,7 +32,7 @@ export default function QuestionCard({
       {/* Meta Headers */}
       <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 dark:border-slate-800 pb-4">
         <div className="flex flex-wrap items-center gap-2">
-          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold uppercase tracking-wider bg-indigo-50 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-400">
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold uppercase tracking-wider bg-orange-50 dark:bg-orange-950/40 text-orange-700 dark:text-orange-400">
             {question.topicSlug}
           </span>
           <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${diffBadge.bgClass} ${diffBadge.colorClass}`}>
@@ -99,7 +99,7 @@ export default function QuestionCard({
       {showFeedback && (
         <div className="mt-8 border-t border-slate-100 dark:border-slate-800 pt-6 space-y-4 animate-slide-up">
           <div className="rounded-xl bg-slate-50 dark:bg-slate-800/40 p-5 border border-slate-200 dark:border-slate-800/60">
-            <h4 className="text-sm font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider">Explanation</h4>
+            <h4 className="text-sm font-bold text-orange-600 dark:text-orange-400 uppercase tracking-wider">Explanation</h4>
             <p className="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
               {question.explanation}
             </p>

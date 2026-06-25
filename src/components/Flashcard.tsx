@@ -38,14 +38,14 @@ export default function Flashcard({ card, isFlipped, onFlip }: FlashcardProps) {
           <div className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white leading-relaxed">
             {card.front}
           </div>
-          <span className="text-xs text-indigo-500 dark:text-indigo-400 font-semibold group-hover:underline">
+          <span className="text-xs text-orange-500 dark:text-orange-400 font-semibold group-hover:underline">
             Click or press Space to reveal answer
           </span>
         </div>
 
         {/* Back Face */}
-        <div className="absolute inset-0 w-full h-full backface-hidden rotate-y-180 rounded-2xl border border-slate-200 dark:border-slate-800 bg-indigo-50/50 dark:bg-indigo-950/20 p-8 shadow-sm flex flex-col justify-between items-center text-center">
-          <span className="text-xs font-semibold text-indigo-500 dark:text-indigo-400 uppercase tracking-wider">
+        <div className="absolute inset-0 w-full h-full backface-hidden rotate-y-180 rounded-2xl border border-slate-200 dark:border-slate-800 bg-orange-50/50 dark:bg-orange-950/20 p-8 shadow-sm flex flex-col justify-between items-center text-center">
+          <span className="text-xs font-semibold text-orange-500 dark:text-orange-400 uppercase tracking-wider">
             Explanation / Definition
           </span>
           <div className="text-base sm:text-lg font-medium text-slate-800 dark:text-slate-200 leading-relaxed max-h-48 overflow-y-auto pr-2">

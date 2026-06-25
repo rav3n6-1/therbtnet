@@ -30,7 +30,7 @@ export default function CompetencyGuidePage() {
       </div>
 
       {/* Supervisor Callout */}
-      <div className="rounded-xl border border-indigo-200 bg-indigo-50/50 p-6 text-sm text-indigo-900 dark:border-indigo-950/40 dark:bg-indigo-950/10 dark:text-indigo-400">
+      <div className="rounded-xl border border-orange-200 bg-orange-50/50 p-6 text-sm text-orange-900 dark:border-orange-950/40 dark:bg-orange-950/10 dark:text-orange-400">
         📋 <strong>Clinical Assessment Notice:</strong> Competency assessments must be conducted by a qualified supervisor (BCBA, BCaBA, or approved assessor). <strong>TheRBT.net does not conduct competency assessments or issue task check-offs.</strong> Study tools on this site are for conceptual review purposes only.
       </div>
 
@@ -66,7 +66,7 @@ export default function CompetencyGuidePage() {
           href="https://www.bacb.com/rbt/"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl py-3 px-6 text-sm font-semibold transition-colors"
+          className="inline-flex bg-orange-600 hover:bg-orange-700 text-white rounded-xl py-3 px-6 text-sm font-semibold transition-colors"
         >
           View BACB RBT Assessment Documents ↗
         </a>

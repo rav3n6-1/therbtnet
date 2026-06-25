@@ -28,7 +28,7 @@ export default function QuestionNavigator({
           let btnClass = 'bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700';
 
           if (isAnswered) {
-            btnClass = 'bg-indigo-50 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-400 border-indigo-200 dark:border-indigo-800/80';
+            btnClass = 'bg-orange-50 dark:bg-orange-950/40 text-orange-700 dark:text-orange-400 border-orange-200 dark:border-orange-800/80';
           }
           if (isFlagged) {
             btnClass = 'bg-amber-50 dark:bg-amber-950/30 text-amber-700 dark:text-amber-400 border-amber-200 dark:border-amber-900/60';
@@ -38,9 +38,9 @@ export default function QuestionNavigator({
             <button
               key={index}
               onClick={() => onNavigate(index)}
-              className={`h-10 w-full flex items-center justify-center text-sm font-semibold rounded-lg border-2 transition-all focus:outline-none focus:ring-2 focus:ring-indigo-500 ${btnClass} ${
+              className={`h-10 w-full flex items-center justify-center text-sm font-semibold rounded-lg border-2 transition-all focus:outline-none focus:ring-2 focus:ring-orange-500 ${btnClass} ${
                 isCurrent
-                  ? 'ring-2 ring-indigo-500 scale-105 border-indigo-500'
+                  ? 'ring-2 ring-orange-500 scale-105 border-orange-500'
                   : ''
               } ${
                 isBookmarked ? 'border-dashed border-emerald-500 dark:border-emerald-400' : ''
@@ -54,7 +54,7 @@ export default function QuestionNavigator({
       </div>
       <div className="flex flex-wrap gap-x-4 gap-y-2 text-xs text-slate-500 dark:text-slate-400 pt-2 border-t border-slate-100 dark:border-slate-800">
         <span className="flex items-center gap-1.5">
-          <span className="w-3 h-3 bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-800 rounded" />
+          <span className="w-3 h-3 bg-orange-50 dark:bg-orange-950/40 border border-orange-200 dark:border-orange-800 rounded" />
           Answered
         </span>
         <span className="flex items-center gap-1.5">
@@ -66,7 +66,7 @@ export default function QuestionNavigator({
           Bookmarked
         </span>
         <span className="flex items-center gap-1.5">
-          <span className="w-3 h-3 border-2 border-indigo-500 rounded ring-1 ring-indigo-500" />
+          <span className="w-3 h-3 border-2 border-orange-500 rounded ring-1 ring-orange-500" />
           Current
         </span>
       </div>

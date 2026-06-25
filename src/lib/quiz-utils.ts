@@ -105,8 +105,8 @@ export function getDifficultyConfig(difficulty: string): {
     default:
       return {
         label: "Mixed",
-        colorClass: "text-indigo-700 dark:text-indigo-400",
-        bgClass: "bg-indigo-100 dark:bg-indigo-900/30",
+        colorClass: "text-orange-700 dark:text-orange-400",
+        bgClass: "bg-orange-100 dark:bg-orange-900/30",
       };
   }
 }

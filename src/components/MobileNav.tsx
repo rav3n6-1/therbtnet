@@ -69,7 +69,7 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
                             href={child.href}
                             onClick={onClose}
                             className={`block rounded-lg px-3 py-2 text-base font-medium transition-colors hover:bg-slate-50 dark:hover:bg-slate-800/50 ${
-                              isChildActive ? 'text-indigo-600 dark:text-indigo-400 font-semibold' : 'text-slate-600 dark:text-slate-300'
+                              isChildActive ? 'text-orange-600 dark:text-orange-400 font-semibold' : 'text-slate-600 dark:text-slate-300'
                             }`}
                           >
                             {child.label}
@@ -83,7 +83,7 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
                     href={item.href}
                     onClick={onClose}
                     className={`block rounded-lg px-3 py-2 text-base font-medium transition-colors hover:bg-slate-50 dark:hover:bg-slate-800/50 ${
-                      pathname === item.href ? 'text-indigo-600 dark:text-indigo-400 font-semibold' : 'text-slate-600 dark:text-slate-300'
+                      pathname === item.href ? 'text-orange-600 dark:text-orange-400 font-semibold' : 'text-slate-600 dark:text-slate-300'
                     }`}
                   >
                     {item.label}

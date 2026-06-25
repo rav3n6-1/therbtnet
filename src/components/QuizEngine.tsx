@@ -203,7 +203,7 @@ export default function QuizEngine({
 
         <button
           onClick={startQuiz}
-          className="w-full sm:w-auto bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl py-3 px-8 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2"
+          className="w-full sm:w-auto bg-orange-600 hover:bg-orange-700 text-white rounded-xl py-3 px-8 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2"
         >
           Begin Session
         </button>
@@ -269,7 +269,7 @@ export default function QuizEngine({
               {currentIndex < questions.length - 1 ? (
                 <button
                   onClick={handleNext}
-                  className="flex items-center gap-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 px-4 py-2.5 text-sm font-semibold text-white transition-colors"
+                  className="flex items-center gap-1.5 rounded-xl bg-orange-600 hover:bg-orange-700 px-4 py-2.5 text-sm font-semibold text-white transition-colors"
                 >
                   Next →
                 </button>

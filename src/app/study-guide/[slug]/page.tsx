@@ -51,7 +51,7 @@ export default async function StudyGuideDetailPage({ params }: StudyGuideDetailP
 
       {/* Rationale and quiz links */}
       <div className="border-t border-slate-205 dark:border-slate-805 pt-8 space-y-6">
-        <div className="rounded-xl border border-indigo-100 bg-indigo-50/50 dark:border-indigo-950/20 dark:bg-indigo-950/10 p-6 text-center sm:text-left flex flex-col sm:flex-row justify-between items-center gap-4">
+        <div className="rounded-xl border border-orange-100 bg-orange-50/50 dark:border-orange-950/20 dark:bg-orange-950/10 p-6 text-center sm:text-left flex flex-col sm:flex-row justify-between items-center gap-4">
           <div>
             <h4 className="font-bold text-slate-900 dark:text-white">Ready to practice this topic?</h4>
             <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
@@ -60,7 +60,7 @@ export default async function StudyGuideDetailPage({ params }: StudyGuideDetailP
           </div>
           <Link
             href={`/topic-quizzes/${guide.slug}`}
-            className="w-full sm:w-auto text-center bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl py-2.5 px-5 text-sm font-semibold transition-colors shrink-0"
+            className="w-full sm:w-auto text-center bg-orange-600 hover:bg-orange-700 text-white rounded-xl py-2.5 px-5 text-sm font-semibold transition-colors shrink-0"
           >
             Practice Quiz
           </Link>

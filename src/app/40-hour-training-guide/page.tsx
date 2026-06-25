@@ -30,7 +30,7 @@ export default function TrainingGuidePage() {
       </div>
 
       {/* Prominent Disclaimer Callout */}
-      <div className="rounded-xl border border-indigo-200 bg-indigo-50/50 p-6 text-sm text-indigo-900 dark:border-indigo-950/40 dark:bg-indigo-950/10 dark:text-indigo-400">
+      <div className="rounded-xl border border-orange-200 bg-orange-50/50 p-6 text-sm text-orange-900 dark:border-orange-950/40 dark:bg-orange-950/10 dark:text-orange-400">
         💡 <strong>Course Provider Notice:</strong> TheRBT.net is an exam-preparation and conceptual study resource only. <strong>TheRBT.net does not provide the 40-hour training course.</strong> Candidates must obtain their 40-hour didactic certificate through qualified external providers and verify current coursework guidelines in the official BACB Handbook.
       </div>
 
@@ -65,7 +65,7 @@ export default function TrainingGuidePage() {
           href="https://www.bacb.com/rbt/"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl py-3 px-6 text-sm font-semibold transition-colors"
+          className="inline-flex bg-orange-600 hover:bg-orange-700 text-white rounded-xl py-3 px-6 text-sm font-semibold transition-colors"
         >
           View BACB RBT Information Center ↗
         </a>

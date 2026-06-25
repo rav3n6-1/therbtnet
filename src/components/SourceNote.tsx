@@ -24,7 +24,7 @@ export default function SourceNote({ className = "" }: SourceNoteProps) {
           href="https://www.bacb.com"
           target="_blank"
           rel="noopener noreferrer"
-          className="font-medium text-indigo-600 hover:text-indigo-700 underline"
+          className="font-medium text-orange-600 hover:text-orange-700 underline"
         >
           bacb.com
         </a>

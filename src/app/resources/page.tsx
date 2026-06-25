@@ -34,7 +34,7 @@ function ResourceCard({ icon, title, description, href, external }: ResourceCard
           href={href}
           target={external ? '_blank' : undefined}
           rel={external ? 'noopener noreferrer' : undefined}
-          className="inline-flex items-center gap-1 text-sm font-semibold text-indigo-600 dark:text-indigo-400 hover:underline"
+          className="inline-flex items-center gap-1 text-sm font-semibold text-orange-600 dark:text-orange-400 hover:underline"
         >
           {external ? 'Visit Official Site ↗' : 'View Resource →'}
         </a>

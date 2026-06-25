@@ -35,7 +35,7 @@ export default function ContactPage() {
               type="text"
               id="name"
               required
-              className="mt-1 block w-full bg-slate-50 dark:bg-slate-800 border border-slate-205 dark:border-slate-700 text-slate-900 dark:text-white rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="mt-1 block w-full bg-slate-50 dark:bg-slate-800 border border-slate-205 dark:border-slate-700 text-slate-900 dark:text-white rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
             />
           </div>
 
@@ -47,7 +47,7 @@ export default function ContactPage() {
               type="email"
               id="email"
               required
-              className="mt-1 block w-full bg-slate-50 dark:bg-slate-800 border border-slate-205 dark:border-slate-700 text-slate-900 dark:text-white rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="mt-1 block w-full bg-slate-50 dark:bg-slate-800 border border-slate-205 dark:border-slate-700 text-slate-900 dark:text-white rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
             />
           </div>
 
@@ -59,13 +59,13 @@ export default function ContactPage() {
               id="message"
               rows={4}
               required
-              className="mt-1 block w-full bg-slate-50 dark:bg-slate-800 border border-slate-205 dark:border-slate-700 text-slate-900 dark:text-white rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="mt-1 block w-full bg-slate-50 dark:bg-slate-800 border border-slate-205 dark:border-slate-700 text-slate-900 dark:text-white rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
             />
           </div>
 
           <button
             type="submit"
-            className="w-full bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl py-3 px-4 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+            className="w-full bg-orange-600 hover:bg-orange-700 text-white rounded-xl py-3 px-4 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
           >
             Send Message
           </button>
@@ -73,7 +73,7 @@ export default function ContactPage() {
 
         <div className="border-t border-slate-100 dark:border-slate-800 pt-6 text-center text-xs text-slate-500">
           📨 <strong>Backend notice:</strong> Form submission is currently inactive. In the meantime, you can reach out directly via email to:{' '}
-          <a href="mailto:contact@therbt.net" className="font-semibold text-indigo-600 dark:text-indigo-400 hover:underline">
+          <a href="mailto:contact@therbt.net" className="font-semibold text-orange-600 dark:text-orange-400 hover:underline">
             contact@therbt.net
           </a>
         </div>

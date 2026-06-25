@@ -33,7 +33,7 @@ export default function TopicCard({ topic }: TopicCardProps) {
           <ul className="mt-2 space-y-1">
             {topic.subtopics.slice(0, 3).map((sub) => (
               <li key={sub.slug} className="text-xs text-slate-600 dark:text-slate-300 flex items-center gap-1.5">
-                <span className="w-1 h-1 rounded-full bg-indigo-500" />
+                <span className="w-1 h-1 rounded-full bg-orange-500" />
                 {sub.title}
               </li>
             ))}
@@ -44,7 +44,7 @@ export default function TopicCard({ topic }: TopicCardProps) {
       <div className="mt-6">
         <Link
           href={`/topic-quizzes/${topic.slug}`}
-          className="block w-full text-center border-2 border-indigo-600 dark:border-indigo-500/50 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-950/30 rounded-xl py-3 px-4 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+          className="block w-full text-center border-2 border-orange-600 dark:border-orange-500/50 text-orange-600 dark:text-orange-400 hover:bg-orange-50 dark:hover:bg-orange-950/30 rounded-xl py-3 px-4 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
         >
           Practice {topic.title}
         </Link>

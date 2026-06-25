@@ -75,7 +75,7 @@ export default function ResultsSummary({
       <div className="flex flex-wrap gap-4 border-t border-b border-slate-200 dark:border-slate-800 py-6">
         <button
           onClick={onReviewAnswers}
-          className="flex-1 sm:flex-initial bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl py-3 px-6 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+          className="flex-1 sm:flex-initial bg-orange-600 hover:bg-orange-700 text-white rounded-xl py-3 px-6 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
         >
           Review Questions & Answers
         </button>
