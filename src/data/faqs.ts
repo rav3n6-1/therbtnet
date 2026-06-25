@@ -44,9 +44,9 @@ export const faqs: FAQ[] = [
   },
   {
     id: "faq-6",
-    question: "Is the 85-question mock exam the same format as the real exam?",
+    question: "Is the mock exam the same format as the real exam?",
     answer:
-      "Our mock exam uses a similar question count and time limit based on publicly available information about the RBT exam format. However, it is a practice simulation only and may not reflect the exact format, scoring, or content distribution of the actual exam. For the most current exam specifications, please refer to the BACB website.",
+      "Our mock exam simulator is modeled after the 85-question structure and 90-minute time limit described in the RBT Test Content Outline. However, it currently uses a representative, scaled subset of original practice questions for preparation purposes. It is a practice simulation only and does not reflect official scoring or content distribution. Always refer to the official RBT Handbook for current specifications.",
     category: "exam",
   },
   {

@@ -14,7 +14,11 @@ export default function PracticeTestCard({ exam }: PracticeTestCardProps) {
   const [completed, setCompleted] = useState(false);
 
   useEffect(() => {
-    setCompleted(isExamCompleted(exam.slug));
+    const isCompleted = isExamCompleted(exam.slug);
+    const timer = setTimeout(() => {
+      setCompleted(isCompleted);
+    }, 0);
+    return () => clearTimeout(timer);
   }, [exam.slug]);
 
   const diffBadge = getDifficultyConfig(exam.difficulty);
@@ -29,12 +33,12 @@ export default function PracticeTestCard({ exam }: PracticeTestCardProps) {
 
       <div className="flex-1 space-y-4">
         {/* Badges */}
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${diffBadge.bgClass} ${diffBadge.colorClass}`}>
             {diffBadge.label}
           </span>
           <span className="text-xs text-slate-500 dark:text-slate-400">
-            {exam.questionCount > 0 ? `${exam.questionCount} Questions` : 'Placeholder Questions'}
+            {exam.questionCount} Questions
           </span>
         </div>
 

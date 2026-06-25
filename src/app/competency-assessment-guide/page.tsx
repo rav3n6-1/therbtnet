@@ -46,7 +46,7 @@ export default function CompetencyGuidePage() {
         <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 space-y-4">
           <h3 className="text-lg font-bold text-slate-900 dark:text-white">What the Assessment Covers</h3>
           <p className="text-sm leading-relaxed text-slate-500 dark:text-slate-400">
-            Assessors will evaluate direct application tasks from the RBT task list content areas, which commonly include:
+            Assessors will evaluate direct application tasks from the RBT Test Content Outline, which commonly include:
           </p>
           <ul className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 space-y-1">
             <li>✓ Preference and functional assessment support</li>

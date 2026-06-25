@@ -11,7 +11,7 @@ export const mainNav: NavItem[] = [
     href: "/practice-tests",
     children: [
       { label: "All Practice Tests", href: "/practice-tests" },
-      { label: "85-Question Mock Exam", href: "/mock-exam" },
+      { label: "Timed Mock Exam", href: "/mock-exam" },
       { label: "Topic Quizzes", href: "/topic-quizzes" },
     ],
   },

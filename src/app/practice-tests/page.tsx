@@ -50,7 +50,7 @@ export default function PracticeTestsPage() {
             Looking for a timed mock exam?
           </h2>
           <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
-            Test your knowledge under timed conditions. Try our 85-question mock exam simulation with a 90-minute limit.
+            Test your knowledge under timed conditions. Try our timed mock exam simulation with a 90-minute limit representing the structure of the RBT outline.
           </p>
         </div>
         <Link

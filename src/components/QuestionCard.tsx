@@ -9,8 +9,6 @@ interface QuestionCardProps {
   selectedChoiceId: ChoiceId | null;
   showFeedback: boolean;
   onSelectChoice: (id: ChoiceId) => void;
-  questionNumber: number;
-  totalQuestions: number;
   isBookmarked: boolean;
   isFlagged: boolean;
   onToggleBookmark: () => void;
@@ -22,8 +20,6 @@ export default function QuestionCard({
   selectedChoiceId,
   showFeedback,
   onSelectChoice,
-  questionNumber,
-  totalQuestions,
   isBookmarked,
   isFlagged,
   onToggleBookmark,
@@ -35,7 +31,7 @@ export default function QuestionCard({
     <div className="space-y-6">
       {/* Meta Headers */}
       <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 dark:border-slate-800 pb-4">
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold uppercase tracking-wider bg-indigo-50 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-400">
             {question.topicSlug}
           </span>

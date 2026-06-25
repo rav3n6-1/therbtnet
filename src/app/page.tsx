@@ -40,13 +40,13 @@ export default function Home() {
           <FeatureCard
             icon="📝"
             title="Practice Tests"
-            description="Take full practice tests covering all RBT task list domains with detailed rationales."
+            description="Take full practice tests covering all RBT Test Content Outline domains with detailed rationales."
             href="/practice-tests"
           />
           <FeatureCard
             icon="⏱"
             title="Mock Exam"
-            description="Test your knowledge with an 85-question mock exam simulation and a 90-minute timer."
+            description="Test your knowledge with a timed mock exam simulation based on the 3rd edition outline."
             href="/mock-exam"
           />
           <FeatureCard
@@ -115,7 +115,7 @@ export default function Home() {
               Study by Topic
             </h2>
             <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
-              Focus on specific content areas defined in the RBT task list domains.
+              Focus on specific content areas defined in the RBT Test Content Outline.
             </p>
           </div>
           <Link href="/topic-quizzes" className="text-sm font-semibold text-indigo-600 dark:text-indigo-400 hover:underline">
@@ -139,7 +139,7 @@ export default function Home() {
             Ready to simulate the exam?
           </h2>
           <p className="text-indigo-200 text-sm sm:text-base leading-relaxed">
-            Our 85-question mock exam has a 90-minute countdown timer and represents the structure of the RBT exam. All questions are original study items.
+            Our timed mock exam simulator represents the structure of the RBT Test Content Outline. All questions are original practice items.
           </p>
         </div>
         <Link

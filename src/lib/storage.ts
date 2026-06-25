@@ -5,7 +5,7 @@
  * under the namespace key prefix: therbt_progress_v1
  * ────────────────────────────────────────────────────────────── */
 
-import { QuizState, QuizResult, QuizAnswer, ChoiceId, ExamMode } from "@/types";
+import { QuizState, QuizResult, QuizAnswer, ExamMode } from "@/types";
 
 const NAMESPACE = "therbt_progress_v1";
 

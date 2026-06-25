@@ -1,15 +1,15 @@
 'use client';
 
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 
 interface TimerProps {
   durationMinutes: number;
+  startedAt: string;
   onTimeUp: () => void;
   isRunning: boolean;
 }
 
-export default function Timer({ durationMinutes, onTimeUp, isRunning }: TimerProps) {
-  const [secondsLeft, setSecondsLeft] = useState(durationMinutes * 60);
+export default function Timer({ durationMinutes, startedAt, onTimeUp, isRunning }: TimerProps) {
   const timeUpRef = useRef(onTimeUp);
 
   // Update ref when onTimeUp changes to avoid re-triggering effects
@@ -17,23 +17,36 @@ export default function Timer({ durationMinutes, onTimeUp, isRunning }: TimerPro
     timeUpRef.current = onTimeUp;
   }, [onTimeUp]);
 
+  // Helper to compute seconds left using system clock to survive reloads/tab pauses
+  const getSecondsLeft = useCallback(() => {
+    if (!startedAt) return durationMinutes * 60;
+    const elapsed = Math.round((Date.now() - new Date(startedAt).getTime()) / 1000);
+    const left = durationMinutes * 60 - elapsed;
+    return left > 0 ? left : 0;
+  }, [startedAt, durationMinutes]);
+
+  const [secondsLeft, setSecondsLeft] = useState(getSecondsLeft);
+
   useEffect(() => {
-    if (!isRunning || secondsLeft <= 0) return;
+    if (!isRunning || !startedAt) return;
 
-    const interval = setInterval(() => {
-      setSecondsLeft((prev) => {
-        if (prev <= 1) {
-          clearInterval(interval);
-          // execute callback on next tick
-          setTimeout(() => timeUpRef.current(), 0);
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
+    const syncTime = () => {
+      const left = getSecondsLeft();
+      if (left <= 0) {
+        setSecondsLeft(0);
+        // Execute callback on next tick
+        setTimeout(() => timeUpRef.current(), 0);
+      } else {
+        setSecondsLeft(left);
+      }
+    };
 
+    // Initial sync
+    syncTime();
+
+    const interval = setInterval(syncTime, 1000);
     return () => clearInterval(interval);
-  }, [isRunning, secondsLeft]);
+  }, [isRunning, startedAt, durationMinutes, getSecondsLeft]);
 
   const formatTime = (totalSeconds: number) => {
     const mins = Math.floor(totalSeconds / 60);

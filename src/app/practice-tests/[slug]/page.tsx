@@ -36,13 +36,8 @@ export default async function PracticeTestPage({ params }: PracticeTestPageProps
     notFound();
   }
 
-  // Load questions for this test.
-  // For practice-test-1, we use all questions as a fallback/example.
-  // For others, we filter questions by topics in the exam's topicSlugs.
-  const isTestOne = exam.slug === 'practice-test-1';
-  const testQuestions = isTestOne
-    ? questions
-    : questions.filter((q) => exam.topicSlugs.includes(q.topicSlug));
+  // Load questions for this test based on examSlug mapping.
+  const testQuestions = questions.filter((q) => q.examSlug === exam.slug);
 
   const breadcrumbs = [
     { label: 'Home', href: '/' },

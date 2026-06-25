@@ -43,7 +43,7 @@ export default function ExamFormatPage() {
         <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 space-y-4">
           <h3 className="text-lg font-bold text-slate-900 dark:text-white">About Our Prep Platform</h3>
           <p className="text-sm leading-relaxed text-slate-500 dark:text-slate-400">
-            TheRBT.net is an independent educational database providing original conceptual study items. We do not host or reproduce official exam items. All quiz items are original scenarios developed by behavior analysts to test task-list concepts.
+            TheRBT.net is an independent educational database providing original conceptual study items. We do not host or reproduce official exam items. All quiz items are original scenarios developed by behavior analysts to test concepts in the RBT Test Content Outline.
           </p>
         </div>
 
@@ -75,7 +75,7 @@ export default function ExamFormatPage() {
           <div className="space-y-2 border-l-2 border-indigo-500 pl-4">
             <h4 className="font-bold text-slate-800 dark:text-white text-sm">2. Simulate Exams</h4>
             <p className="text-xs text-slate-500 dark:text-slate-400">
-              Complete the timed 85-question simulator to build focus and study pacing.
+              Complete the timed mock exam simulator to build focus and study pacing.
             </p>
           </div>
           <div className="space-y-2 border-l-2 border-indigo-500 pl-4">

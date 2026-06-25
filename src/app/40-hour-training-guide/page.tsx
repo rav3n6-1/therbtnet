@@ -25,7 +25,7 @@ export default function TrainingGuidePage() {
           RBT 40-Hour Training Requirement
         </h1>
         <p className="text-sm sm:text-base text-slate-500 dark:text-slate-400 max-w-2xl leading-relaxed">
-          Aspiring Registered Behavior Technicians must complete a 40-hour didactic training curriculum based on the RBT task list. Here is an overview of what this requirement entails.
+          Aspiring Registered Behavior Technicians must complete a 40-hour didactic training curriculum based on the RBT Test Content Outline. Here is an overview of what this requirement entails.
         </p>
       </div>
 
@@ -50,7 +50,7 @@ export default function TrainingGuidePage() {
           </p>
           <ul className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 space-y-1">
             <li>✓ It is conducted by a qualified behavior analyst (BCBA/BCaBA)</li>
-            <li>✓ It covers the entire 2nd Edition RBT Task List content areas</li>
+            <li>✓ It covers the entire 3rd Edition RBT Test Content Outline areas</li>
             <li>✓ Includes training on ethics and professional conduct rules</li>
           </ul>
         </div>

@@ -7,11 +7,9 @@ import Flashcard from './Flashcard';
 
 interface FlashcardDeckProps {
   cards: FlashcardType[];
-  topicFilter?: string;
 }
 
-export default function FlashcardDeck({ cards, topicFilter }: // eslint-disable-next-line @typescript-eslint/no-unused-vars
-FlashcardDeckProps) {
+export default function FlashcardDeck({ cards }: FlashcardDeckProps) {
   const [activeTopic, setActiveTopic] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -22,8 +20,11 @@ FlashcardDeckProps) {
   // Load progress on mount
   useEffect(() => {
     const progress = getFlashcardProgress();
-    setKnownIds(progress.known);
-    setUnknownIds(progress.unknown);
+    const timer = setTimeout(() => {
+      setKnownIds(progress.known);
+      setUnknownIds(progress.unknown);
+    }, 0);
+    return () => clearTimeout(timer);
   }, []);
 
   // Filter cards based on search query and active topic

@@ -1321,8 +1321,7 @@ export const questions: Question[] = [
       }
     ],
     "correctChoiceId": "A",
-    // Line 392 approx.
-"explanation": "The first entry describes observable actions and speech without inferring emotion or purpose.",
+    "explanation": "The third entry describes observable actions and speech without inferring emotion or purpose.",
     "whyOthersAreWrong": {
       "B": "“Frustrated” is an inferred internal state.",
       "C": "“Trying to escape” states a hypothesized function rather than the observed response.",
@@ -4560,8 +4559,7 @@ export const questions: Question[] = [
       }
     ],
     "correctChoiceId": "D",
-   // Line 1162 approx.
-"explanation": "The fourth note identifies observable behavior, timing, context, and the implemented procedure without inference.",
+    "explanation": "The second note identifies observable behavior, timing, context, and the implemented procedure without inference.",
     "whyOthersAreWrong": {
       "A": "“Devastated” is an inferred emotional state.",
       "B": "“Hates” is an unsupported conclusion.",
@@ -5586,8 +5584,7 @@ export const questions: Question[] = [
       }
     ],
     "correctChoiceId": "A",
-    // Line 1335 approx.
-"explanation": "The first statement accurately represents the supervised technician role without guarantees or unsupported claims.",
+    "explanation": "The second statement accurately represents the supervised technician role without guarantees or unsupported claims.",
     "whyOthersAreWrong": {
       "B": "Claims of cure and a proprietary independent method are misleading.",
       "C": "A behavior technician is not equivalent to a psychologist.",
@@ -6363,8 +6360,7 @@ export const questions: Question[] = [
       }
     ],
     "correctChoiceId": "D",
-   // Line 1515 approx.
-"explanation": "The fourth note objectively states the event, time, effect on service, and required communication without blame or unsupported inference.",
+    "explanation": "The second note objectively states the event, time, effect on service, and required communication without blame or unsupported inference.",
     "whyOthersAreWrong": {
       "A": "Blame is not necessary clinical documentation.",
       "B": "The interruption affected service and should be recorded.",

@@ -1,21 +1,17 @@
 'use client';
 
-import { QuizResult, Question, QuizAnswer } from '@/types';
+import { QuizResult } from '@/types';
 import { getScoreLabel, formatTime } from '@/lib/quiz-utils';
 import TopicBreakdown from './TopicBreakdown';
 
 interface ResultsSummaryProps {
   result: QuizResult;
-  questions: Question[];
-  answers: QuizAnswer[];
   onRetake: () => void;
   onReviewAnswers: () => void;
 }
 
 export default function ResultsSummary({
   result,
-  questions,
-  answers,
   onRetake,
   onReviewAnswers,
 }: ResultsSummaryProps) {

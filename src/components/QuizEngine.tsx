@@ -43,22 +43,25 @@ export default function QuizEngine({
   // Load initial state from localStorage if available
   useEffect(() => {
     const saved = loadQuizState(examSlug);
-    if (saved && saved.mode === mode && !saved.isSubmitted) {
-      setAnswers(saved.answers);
-      setCurrentIndex(saved.currentIndex);
-      setStartedAt(saved.startedAt);
-      setPhase('active');
-    } else {
-      // Initialize fresh answers array
-      const initialAnswers = questions.map((q) => ({
-        questionId: q.id,
-        selectedChoiceId: null,
-        isCorrect: null,
-        isBookmarked: false,
-        isFlagged: false,
-      }));
-      setAnswers(initialAnswers);
-    }
+    const timer = setTimeout(() => {
+      if (saved && saved.mode === mode && !saved.isSubmitted && saved.answers.length === questions.length) {
+        setAnswers(saved.answers);
+        setCurrentIndex(saved.currentIndex);
+        setStartedAt(saved.startedAt);
+        setPhase('active');
+      } else {
+        // Initialize fresh answers array
+        const initialAnswers = questions.map((q) => ({
+          questionId: q.id,
+          selectedChoiceId: null,
+          isCorrect: null,
+          isBookmarked: false,
+          isFlagged: false,
+        }));
+        setAnswers(initialAnswers);
+      }
+    }, 0);
+    return () => clearTimeout(timer);
   }, [examSlug, questions, mode]);
 
   const startQuiz = () => {
@@ -171,7 +174,6 @@ export default function QuizEngine({
   };
 
   const answeredCount = answers.filter((a) => a.selectedChoiceId !== null).length;
-  const isSubmitDisabled = mode === 'mock' && answeredCount < questions.length; // prompt says let them submit anyway but warning, let's allow submission with warning.
 
   if (phase === 'intro') {
     return (
@@ -226,6 +228,7 @@ export default function QuizEngine({
               {durationMinutes && (
                 <Timer
                   durationMinutes={durationMinutes}
+                  startedAt={startedAt}
                   onTimeUp={handleSubmit}
                   isRunning={true}
                 />
@@ -246,8 +249,6 @@ export default function QuizEngine({
                 selectedChoiceId={currentAnswer.selectedChoiceId}
                 showFeedback={mode === 'practice' && currentAnswer.selectedChoiceId !== null}
                 onSelectChoice={handleSelectChoice}
-                questionNumber={currentIndex + 1}
-                totalQuestions={questions.length}
                 isBookmarked={currentAnswer.isBookmarked}
                 isFlagged={currentAnswer.isFlagged}
                 onToggleBookmark={handleToggleBookmark}
@@ -302,8 +303,6 @@ export default function QuizEngine({
     return (
       <ResultsSummary
         result={result}
-        questions={questions}
-        answers={answers}
         onRetake={handleRetake}
         onReviewAnswers={() => setPhase('review')}
       />

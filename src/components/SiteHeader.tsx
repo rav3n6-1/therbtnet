@@ -16,7 +16,10 @@ export default function SiteHeader() {
     // Initial check
     if (typeof window !== 'undefined') {
       const dark = document.documentElement.classList.contains('dark');
-      setIsDark(dark);
+      const timer = setTimeout(() => {
+        setIsDark(dark);
+      }, 0);
+      return () => clearTimeout(timer);
     }
   }, []);
 
@@ -49,14 +52,30 @@ export default function SiteHeader() {
             const isActive = pathname === item.href || (item.children?.some(c => pathname === c.href));
 
             if (hasChildren) {
+              const isOpen = activeDropdown === item.label;
               return (
                 <div
                   key={item.label}
-                  className="relative"
+                  className="relative dropdown-container"
                   onMouseEnter={() => setActiveDropdown(item.label)}
                   onMouseLeave={() => setActiveDropdown(null)}
+                  onBlur={(e) => {
+                    if (!e.currentTarget.contains(e.relatedTarget as Node)) {
+                      setActiveDropdown(null);
+                    }
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Escape') {
+                      setActiveDropdown(null);
+                      const button = e.currentTarget.querySelector('button');
+                      button?.focus();
+                    }
+                  }}
                 >
                   <button
+                    onClick={() => setActiveDropdown(isOpen ? null : item.label)}
+                    aria-haspopup="true"
+                    aria-expanded={isOpen}
                     className={`flex items-center gap-1 text-sm font-medium transition-colors hover:text-indigo-600 dark:hover:text-indigo-400 py-2 ${
                       isActive ? 'text-indigo-600 dark:text-indigo-400' : 'text-slate-600 dark:text-slate-300'
                     }`}
@@ -66,7 +85,7 @@ export default function SiteHeader() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                     </svg>
                   </button>
-                  {activeDropdown === item.label && (
+                  {isOpen && (
                     <div className="absolute top-full left-0 w-56 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-2 shadow-lg animate-fade-in">
                       {item.children?.map((child) => {
                         const isChildActive = pathname === child.href;
