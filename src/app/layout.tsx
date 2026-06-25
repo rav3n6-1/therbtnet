@@ -4,6 +4,7 @@ import './globals.css';
 import DisclaimerBanner from '@/components/DisclaimerBanner';
 import SiteHeader from '@/components/SiteHeader';
 import SiteFooter from '@/components/SiteFooter';
+import Script from 'next/script';
 
 const inter = Inter({
   variable: '--font-sans',
@@ -44,6 +45,25 @@ export default function RootLayout({
           {children}
         </main>
         <SiteFooter />
+
+        {process.env.NEXT_PUBLIC_GA_ID && (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
+              strategy="afterInteractive"
+            />
+            <Script id="google-analytics" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}', {
+                  page_path: window.location.pathname,
+                });
+              `}
+            </Script>
+          </>
+        )}
       </body>
     </html>
   );
