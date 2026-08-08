@@ -24,36 +24,53 @@ export default function PrivacyPolicyPage() {
           Privacy Policy
         </h1>
         <p className="text-sm text-slate-500 dark:text-slate-400">
-          Last updated: June 19, 2026
+          Last updated: August 9, 2026
         </p>
       </div>
 
       <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 sm:p-8 space-y-6 leading-relaxed text-sm text-slate-650 text-slate-605 dark:text-slate-350">
         <div className="space-y-2">
-          <h2 className="text-base font-bold text-slate-900 dark:text-white">1. Local Storage Only</h2>
+          <h2 className="text-base font-bold text-slate-900 dark:text-white">1. Local Storage</h2>
           <p>
-            Your study progress, practice quiz answers, flags, bookmarks, and readiness indicator percentages are saved <strong>exclusively in your browser&apos;s local storage</strong> (namespaced under `therbt_progress_v1`). We do not transmit, sync, or upload this data to any database or external server.
+            Your detailed question-by-question history, bookmarked items, session flags, and complete study records are saved locally in your browser&apos;s local storage (namespaced under <code>therbt_progress_v1</code>). No user accounts or backend database profiles are created to store your personal history.
           </p>
         </div>
 
         <div className="space-y-2 border-t border-slate-100 dark:border-slate-800 pt-6">
           <h2 className="text-base font-bold text-slate-900 dark:text-white">2. No Account Creation</h2>
           <p>
-            TheRBT.net does not currently require or offer user account creation. Since no logins are registered, no personal identifiers, passwords, or emails are collected during your practice sessions.
+            TheRBT.net does not require or offer user account creation. Since no account registrations exist, no personal identifiers, passwords, or email addresses are requested or stored during your study sessions.
           </p>
         </div>
 
         <div className="space-y-2 border-t border-slate-100 dark:border-slate-800 pt-6">
-          <h2 className="text-base font-bold text-slate-900 dark:text-white">3. Cookies and Analytics</h2>
+          <h2 className="text-base font-bold text-slate-900 dark:text-white">3. Google Analytics 4</h2>
           <p>
-            We do not deploy marketing cookies or third-party behavioral analytics tracking. The site uses only default Next.js assets required for basic application loading and page routing.
+            TheRBT.net uses Google Analytics 4 (GA4) to understand aggregate site usage, traffic sources, and feature performance to help us improve the product experience.
+          </p>
+          <p>
+            Google Analytics collects information such as pages viewed, referral source, approximate geographic location, device and browser information, session engagement, and interaction events. In addition, aggregate study interaction metrics (such as test completion percentages, overall RBT Readiness Scores, domain attempt summaries, and session duration) may be sent as anonymous event parameters to Google Analytics.
+          </p>
+          <p>
+            We do not intentionally send names, email addresses, full quiz answer text, or other directly identifying personal information to Google Analytics.
+          </p>
+          <p>
+            To learn more about how Google processes data when you visit websites that integrate its services, please see{' '}
+            <a
+              href="https://policies.google.com/technologies/partner-sites"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-orange-600 dark:text-orange-400 font-medium underline hover:text-orange-700"
+            >
+              How Google uses information from sites or apps that use our services
+            </a>.
           </p>
         </div>
 
         <div className="space-y-2 border-t border-slate-100 dark:border-slate-800 pt-6">
           <h2 className="text-base font-bold text-slate-900 dark:text-white">4. Data Erasure</h2>
           <p>
-            Because your progress resides entirely in your browser, you can completely erase all your records at any time. Simply clear your browser cookies and local site data, or click the reset actions in the study settings of your browser.
+            Because your detailed progress data resides in your browser&apos;s local storage, you can erase your study records at any time by clearing your browser cookies and site data for TheRBT.net.
           </p>
         </div>
       </div>
