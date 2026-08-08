@@ -4,6 +4,7 @@
 
 import { Question, QuizAnswer, QuizResult, TopicScore } from "@/types";
 import { topics } from "@/data/topics";
+import { getReadinessBand } from "@/lib/readiness";
 
 /**
  * Calculate quiz results from answered questions.
@@ -125,32 +126,17 @@ export function shuffleArray<T>(array: T[]): T[] {
 
 /**
  * Get a practice score label — careful wording, not "pass/fail".
+ * Uses the centralized readiness bands from readiness.ts.
  */
 export function getScoreLabel(percentage: number): {
   label: string;
   description: string;
   colorClass: string;
 } {
-  if (percentage >= 85) {
-    return {
-      label: "Strong Readiness",
-      description:
-        "Your practice score suggests strong preparation. Continue reviewing all topic areas.",
-      colorClass: "text-emerald-600 dark:text-emerald-400",
-    };
-  }
-  if (percentage >= 70) {
-    return {
-      label: "Moderate Readiness",
-      description:
-        "Your practice score shows moderate preparation. Focus on weaker topic areas for improvement.",
-      colorClass: "text-amber-600 dark:text-amber-400",
-    };
-  }
+  const band = getReadinessBand(percentage);
   return {
-    label: "Needs More Practice",
-    description:
-      "Your practice score suggests additional study is recommended. Review the study guides and retake practice tests.",
-    colorClass: "text-rose-600 dark:text-rose-400",
+    label: band.label,
+    description: band.description,
+    colorClass: band.colorClass,
   };
 }

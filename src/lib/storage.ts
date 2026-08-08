@@ -196,6 +196,150 @@ export function updateAnalytics(update: Partial<SimpleAnalytics>): void {
   });
 }
 
+// ─── RBT Readiness Progress ─────────────────────────────────
+
+export interface RbtProgress {
+  version: 1;
+  lastUpdated: string;
+  totalQuestionsAnswered: number;
+  totalCorrect: number;
+  readinessScore: number;
+  domains: Record<
+    string,
+    { attempted: number; correct: number; percentage: number }
+  >;
+  /** Maps questionId → latest isCorrect result for deduplication */
+  questionResults: Record<string, boolean>;
+  completedTests: string[];
+}
+
+const PROGRESS_KEY = "readiness_progress";
+
+function createEmptyProgress(): RbtProgress {
+  return {
+    version: 1,
+    lastUpdated: new Date().toISOString(),
+    totalQuestionsAnswered: 0,
+    totalCorrect: 0,
+    readinessScore: 0,
+    domains: {},
+    questionResults: {},
+    completedTests: [],
+  };
+}
+
+/**
+ * Load the accumulated readiness progress from localStorage.
+ * Returns null if no progress exists or data is corrupted/outdated.
+ */
+export function loadProgress(): RbtProgress | null {
+  const data = safeGet<RbtProgress>(PROGRESS_KEY);
+  if (!data) return null;
+
+  // Version check — reject incompatible schemas
+  if (typeof data.version !== "number" || data.version !== 1) return null;
+
+  // Basic shape validation
+  if (
+    typeof data.totalQuestionsAnswered !== "number" ||
+    typeof data.totalCorrect !== "number" ||
+    typeof data.domains !== "object" ||
+    typeof data.questionResults !== "object"
+  ) {
+    return null;
+  }
+
+  return data;
+}
+
+/**
+ * Save progress to localStorage.
+ */
+export function saveProgress(progress: RbtProgress): void {
+  safeSet(PROGRESS_KEY, progress);
+}
+
+/**
+ * Merge a completed quiz result into the accumulated progress.
+ *
+ * Uses per-question deduplication: if a question was previously answered,
+ * the old result is replaced with the new one, and domain/total counts
+ * are recalculated from scratch to ensure accuracy.
+ *
+ * @param result - The quiz result to merge
+ * @param questionTopicMap - Map of questionId → topicSlug for domain attribution
+ */
+export function mergeQuizIntoProgress(
+  result: QuizResult,
+  questionTopicMap: Record<string, string>,
+  questionCorrectMap: Record<string, boolean>
+): RbtProgress {
+  const existing = loadProgress() ?? createEmptyProgress();
+
+  // Update per-question results (latest answer wins)
+  const updatedQuestionResults = { ...existing.questionResults };
+  for (const [questionId, isCorrect] of Object.entries(questionCorrectMap)) {
+    updatedQuestionResults[questionId] = isCorrect;
+  }
+
+  // Add test to completed list if not already there
+  const completedTests = existing.completedTests.includes(result.examSlug)
+    ? existing.completedTests
+    : [...existing.completedTests, result.examSlug];
+
+  // Recalculate everything from the question-level results
+  let totalCorrect = 0;
+  let totalAnswered = 0;
+  const domainMap: Record<string, { correct: number; attempted: number }> = {};
+
+  for (const [questionId, isCorrect] of Object.entries(
+    updatedQuestionResults
+  )) {
+    totalAnswered++;
+    if (isCorrect) totalCorrect++;
+
+    const topicSlug = questionTopicMap[questionId];
+    if (topicSlug) {
+      if (!domainMap[topicSlug]) {
+        domainMap[topicSlug] = { correct: 0, attempted: 0 };
+      }
+      domainMap[topicSlug].attempted++;
+      if (isCorrect) domainMap[topicSlug].correct++;
+    }
+  }
+
+  // Calculate domain percentages
+  const domains: RbtProgress["domains"] = {};
+  for (const [slug, data] of Object.entries(domainMap)) {
+    domains[slug] = {
+      attempted: data.attempted,
+      correct: data.correct,
+      percentage:
+        data.attempted > 0
+          ? Math.round((data.correct / data.attempted) * 100)
+          : 0,
+    };
+  }
+
+  // Calculate overall readiness score
+  const readinessScore =
+    totalAnswered > 0 ? Math.round((totalCorrect / totalAnswered) * 100) : 0;
+
+  const progress: RbtProgress = {
+    version: 1,
+    lastUpdated: new Date().toISOString(),
+    totalQuestionsAnswered: totalAnswered,
+    totalCorrect,
+    readinessScore,
+    domains,
+    questionResults: updatedQuestionResults,
+    completedTests,
+  };
+
+  saveProgress(progress);
+  return progress;
+}
+
 // ─── Update Answer ───────────────────────────────────────────
 
 export function updateQuizAnswer(

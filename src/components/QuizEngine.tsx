@@ -8,7 +8,19 @@ import {
   clearQuizState,
   saveQuizResult,
   markExamCompleted,
+  mergeQuizIntoProgress,
+  loadProgress,
 } from '@/lib/storage';
+import {
+  trackPracticeTestStart,
+  trackPracticeTestComplete,
+  trackPracticeTestQuestionAnswered,
+  trackMockExamStart,
+  trackMockExamComplete,
+  trackDomainQuizStart,
+  trackDomainQuizComplete,
+  getQuizType,
+} from '@/lib/analytics';
 import { calculateResults } from '@/lib/quiz-utils';
 import QuestionCard from './QuestionCard';
 import QuizProgressBar from './QuizProgressBar';
@@ -79,6 +91,16 @@ export default function QuizEngine({
       isSubmitted: false,
     };
     saveQuizState(newState);
+
+    const quizType = getQuizType(examSlug);
+    if (quizType === 'mock') {
+      trackMockExamStart({ test_id: examSlug, test_name: title, question_count: questions.length });
+    } else if (quizType === 'domain') {
+      const domain = examSlug.replace('topic-', '');
+      trackDomainQuizStart({ domain, quiz_id: examSlug, question_count: questions.length });
+    } else {
+      trackPracticeTestStart({ test_id: examSlug, test_name: title, question_count: questions.length });
+    }
   };
 
   const handleSelectChoice = (choiceId: ChoiceId) => {
@@ -107,6 +129,16 @@ export default function QuizEngine({
       isSubmitted: false,
     };
     saveQuizState(updatedState);
+
+    const quizType = getQuizType(examSlug);
+    if (quizType !== 'domain') {
+      trackPracticeTestQuestionAnswered({
+        test_id: examSlug,
+        question_number: currentIndex + 1,
+        domain: currentQuestion.topicSlug,
+        is_correct: isCorrect,
+      });
+    }
   };
 
   const handleToggleBookmark = () => {
@@ -156,6 +188,52 @@ export default function QuizEngine({
     saveQuizResult(finalResult);
     markExamCompleted(examSlug);
     clearQuizState(examSlug);
+
+    const quizType = getQuizType(examSlug);
+    const domainsAttempted = [...new Set(questions.map(q => q.topicSlug))].join(',');
+
+    if (quizType === 'mock') {
+      trackMockExamComplete({
+        test_id: examSlug,
+        test_name: title,
+        question_count: questions.length,
+        score_percent: finalResult.percentage,
+        correct_answers: finalResult.score,
+        duration_seconds: finalResult.timeSpentSeconds,
+        domains_attempted: domainsAttempted,
+      });
+    } else if (quizType === 'domain') {
+      const domain = examSlug.replace('topic-', '');
+      trackDomainQuizComplete({
+        domain,
+        quiz_id: examSlug,
+        score_percent: finalResult.percentage,
+        question_count: questions.length,
+      });
+    } else {
+      trackPracticeTestComplete({
+        test_id: examSlug,
+        test_name: title,
+        question_count: questions.length,
+        score_percent: finalResult.percentage,
+        correct_answers: finalResult.score,
+        duration_seconds: finalResult.timeSpentSeconds,
+        domains_attempted: domainsAttempted,
+      });
+    }
+
+    // Build question maps for progress persistence
+    const questionTopicMap: Record<string, string> = {};
+    const questionCorrectMap: Record<string, boolean> = {};
+    for (let i = 0; i < questions.length; i++) {
+      const q = questions[i];
+      const a = answers[i];
+      questionTopicMap[q.id] = q.topicSlug;
+      if (a?.selectedChoiceId !== null) {
+        questionCorrectMap[q.id] = a.selectedChoiceId === q.correctChoiceId;
+      }
+    }
+    mergeQuizIntoProgress(finalResult, questionTopicMap, questionCorrectMap);
   };
 
   const handleRetake = () => {
@@ -199,6 +277,10 @@ export default function QuizEngine({
           {mode === 'practice'
             ? 'In Practice Mode, you receive immediate feedback and conceptual explanations after making your selection. Take your time to review each rational explanation.'
             : 'In Exam Mode, you will not receive immediate feedback. A countdown timer will run (if set), and you will be able to review all explanations and topic breakdowns only after submitting the complete session.'}
+        </p>
+
+        <p className="text-xs text-slate-400 dark:text-slate-500">
+          Complete this session to see your RBT Readiness Score and identify areas that need more practice.
         </p>
 
         <button

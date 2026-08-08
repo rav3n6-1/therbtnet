@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import ReturningUserBanner from './ReturningUserBanner';
 
 export default function HeroSection() {
   return (
@@ -33,6 +34,12 @@ export default function HeroSection() {
             View Study Guide
           </Link>
         </div>
+
+        <p className="text-sm text-slate-400 max-w-lg mx-auto">
+          Get your Readiness Score and see which RBT domains need the most work.
+        </p>
+
+        <ReturningUserBanner />
 
         <div className="text-xs text-slate-400 border-t border-slate-800/80 pt-6 max-w-lg mx-auto">
           🔒 Original practice questions. No official BACB exam items. Not affiliated with or endorsed by the BACB®.
