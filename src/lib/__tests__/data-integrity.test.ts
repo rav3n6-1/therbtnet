@@ -142,3 +142,44 @@ describe("Flashcards Integrity", () => {
     }
   });
 });
+
+describe("Robots Configuration Integrity", () => {
+  it("allows OAI-SearchBot and general crawlers to crawl all public pages", async () => {
+    const robotsModule = await import("@/app/robots");
+    const robotsConfig = robotsModule.default();
+
+    expect(robotsConfig.rules).toBeDefined();
+
+    const rules = Array.isArray(robotsConfig.rules)
+      ? robotsConfig.rules
+      : [robotsConfig.rules];
+
+    const oaiRule = rules.find((r) => r.userAgent === "OAI-SearchBot");
+    expect(oaiRule).toBeDefined();
+    expect(oaiRule?.allow).toBe("/");
+
+    const generalRule = rules.find((r) => r.userAgent === "*");
+    expect(generalRule).toBeDefined();
+    expect(generalRule?.allow).toBe("/");
+
+    expect(robotsConfig.sitemap).toBe("https://therbt.net/sitemap.xml");
+  });
+});
+
+describe("Sitemap Configuration Integrity", () => {
+  it("generates a valid sitemap with all static and dynamic pages", async () => {
+    const sitemapModule = await import("@/app/sitemap");
+    const sitemapEntries = sitemapModule.default();
+
+    expect(sitemapEntries.length).toBeGreaterThan(20);
+
+    const urls = sitemapEntries.map((entry) => entry.url);
+    expect(urls).toContain("https://therbt.net");
+    expect(urls).toContain("https://therbt.net/practice-tests");
+    expect(urls).toContain("https://therbt.net/mock-exam");
+    expect(urls).toContain("https://therbt.net/study-guide");
+    expect(urls).toContain("https://therbt.net/practice-tests/practice-test-1");
+    expect(urls).toContain("https://therbt.net/study-guide/measurement");
+    expect(urls).toContain("https://therbt.net/topic-quizzes/measurement");
+  });
+});
