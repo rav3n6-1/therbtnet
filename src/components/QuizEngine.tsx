@@ -9,13 +9,13 @@ import {
   saveQuizResult,
   markExamCompleted,
   mergeQuizIntoProgress,
-  loadProgress,
 } from '@/lib/storage';
 import {
   trackPracticeTestStart,
   trackPracticeTestComplete,
   trackPracticeTestQuestionAnswered,
   trackMockExamStart,
+  trackMockExamQuestionAnswered,
   trackMockExamComplete,
   trackDomainQuizStart,
   trackDomainQuizComplete,
@@ -132,7 +132,10 @@ export default function QuizEngine({
 
     const quizType = getQuizType(examSlug);
     if (quizType !== 'domain') {
-      trackPracticeTestQuestionAnswered({
+      const trackAnswer = quizType === 'mock'
+        ? trackMockExamQuestionAnswered
+        : trackPracticeTestQuestionAnswered;
+      trackAnswer({
         test_id: examSlug,
         question_number: currentIndex + 1,
         domain: currentQuestion.topicSlug,
@@ -201,7 +204,7 @@ export default function QuizEngine({
         correct_answers: finalResult.score,
         duration_seconds: finalResult.timeSpentSeconds,
         domains_attempted: domainsAttempted,
-      });
+      }, startedAt);
     } else if (quizType === 'domain') {
       const domain = examSlug.replace('topic-', '');
       trackDomainQuizComplete({
@@ -209,7 +212,7 @@ export default function QuizEngine({
         quiz_id: examSlug,
         score_percent: finalResult.percentage,
         question_count: questions.length,
-      });
+      }, startedAt);
     } else {
       trackPracticeTestComplete({
         test_id: examSlug,
@@ -219,7 +222,7 @@ export default function QuizEngine({
         correct_answers: finalResult.score,
         duration_seconds: finalResult.timeSpentSeconds,
         domains_attempted: domainsAttempted,
-      });
+      }, startedAt);
     }
 
     // Build question maps for progress persistence
