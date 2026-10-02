@@ -13,6 +13,7 @@
 | Event | Parameters | Key Event? |
 |-------|-----------|------------|
 | `mock_exam_start` | `test_id`, `test_name`, `question_count` | No |
+| `mock_exam_question_answered` | `test_id`, `question_number`, `domain`, `is_correct` | No |
 | `mock_exam_complete` | `test_id`, `test_name`, `question_count`, `score_percent`, `correct_answers`, `duration_seconds`, `domains_attempted` | **Yes** |
 
 ### Domain/Topic Quizzes
@@ -75,6 +76,15 @@ Key Events:
 
 ## Deduplication
 
-One-shot events (`practice_test_complete`, `mock_exam_complete`, `domain_quiz_complete`, `readiness_score_view`) use a session-level `Set` guard. This prevents duplicate events from React rerenders or strict mode double-mounting.
+Completion events (`practice_test_complete`, `mock_exam_complete`, `domain_quiz_complete`) use an in-memory `Set` guard keyed by event name, quiz slug, and the attempt's `startedAt` value. A duplicate submission for that attempt is suppressed; a retake with a new start time is counted, even without a page reload. Resuming a saved quiz preserves its start time. Attempt identifiers stay in the browser and are not sent as GA4 parameters.
 
-The dedup key is `${eventName}__${uniqueId}` — a fresh page load resets the guard, which is the correct behavior (a new session should be able to fire events again).
+The guard is updated only when the event is handed to `gtag`. If GA is unavailable or the call runs during server rendering, the function returns `false` and a later explicit call can retry. There is no background queue or automatic retry; a successful handoff is not proof of network delivery. The guard resets on a full page reload and does not provide deduplication across tabs or reloads.
+
+`readiness_score_view` retains its existing score-and-question-count deduplication. Mock answer clicks now use `mock_exam_question_answered`, not `practice_test_question_answered`. Neither answer-click event should be marked as a key event.
+
+### Retake regression check
+
+1. With GA4 DebugView enabled, complete a practice test and observe one completion event.
+2. Use the retake button and finish the same test again without reloading. Expect a second completion event.
+3. Review answers and return to the result screen. This should not add a completion event.
+4. Repeat for a topic quiz and a mock exam. Mock answer clicks should appear only under `mock_exam_question_answered`.

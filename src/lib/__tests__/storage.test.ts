@@ -2,7 +2,7 @@
  * TheRBT.net – Storage Layer Integrity Unit Tests
  * ────────────────────────────────────────────────────────────── */
 
-import { describe, it, expect, beforeEach } from "vitest";
+import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
 import {
   saveQuizState,
   loadQuizState,
@@ -20,9 +20,7 @@ import {
   markFlashcardUnknown,
   resetFlashcardProgress,
   loadProgress,
-  saveProgress,
   mergeQuizIntoProgress,
-  RbtProgress,
 } from "../storage";
 import { QuizState, QuizResult } from "@/types";
 
@@ -30,7 +28,9 @@ import { QuizState, QuizResult } from "@/types";
 
 const localStorageStore = new Map<string, string>();
 
-const localStorageMock = {
+const localStorageMock: Storage = {
+  get length() { return localStorageStore.size; },
+  key: (index: number) => Array.from(localStorageStore.keys())[index] ?? null,
   getItem: (key: string) => localStorageStore.get(key) ?? null,
   setItem: (key: string, value: string) => localStorageStore.set(key, value),
   removeItem: (key: string) => localStorageStore.delete(key),
@@ -39,13 +39,11 @@ const localStorageMock = {
 
 beforeEach(() => {
   localStorageStore.clear();
-  // @ts-expect-error - minimal window mock for testing
-  globalThis.window = {
-    localStorage: localStorageMock,
-  };
-  // @ts-expect-error - assign to global localStorage
-  globalThis.localStorage = localStorageMock;
+  vi.stubGlobal("window", { localStorage: localStorageMock });
+  vi.stubGlobal("localStorage", localStorageMock);
 });
+
+afterEach(() => vi.unstubAllGlobals());
 
 describe("Quiz State Storage", () => {
   it("saves and loads quiz state correctly", () => {

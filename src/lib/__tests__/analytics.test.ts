@@ -9,6 +9,7 @@ import {
   trackPracticeTestComplete,
   trackPracticeTestQuestionAnswered,
   trackMockExamComplete,
+  trackMockExamQuestionAnswered,
   trackDomainQuizComplete,
   trackReadinessScoreView,
   getQuizType,
@@ -69,7 +70,55 @@ describe("trackEvent", () => {
 // ─── Dedup Guard ─────────────────────────────────────────────
 
 describe("dedup guard", () => {
-  it("fires practice_test_complete only once per test_id", () => {
+  const completionParams = {
+    test_id: "practice-test-1",
+    test_name: "Test 1",
+    question_count: 25,
+    score_percent: 72,
+    correct_answers: 18,
+    duration_seconds: 600,
+    domains_attempted: "measurement",
+  };
+
+  it.each([
+    ["practice", (attempt: string) => trackPracticeTestComplete(completionParams, attempt)],
+    ["mock", (attempt: string) => trackMockExamComplete({ ...completionParams, test_id: "mock-exam" }, attempt)],
+    ["domain", (attempt: string) => trackDomainQuizComplete({
+      domain: "measurement", quiz_id: "topic-measurement", score_percent: 72, question_count: 25,
+    }, attempt)],
+  ])("counts a genuine %s retake while rejecting duplicate submissions", (_type, complete) => {
+    expect(complete("2026-10-02T10:00:00.000Z")).toBe(true);
+    expect(complete("2026-10-02T10:00:00.000Z")).toBe(false);
+    expect(complete("2026-10-02T10:30:00.000Z")).toBe(true);
+    expect(complete("2026-10-02T10:30:00.000Z")).toBe(false);
+    expect(mockGtag).toHaveBeenCalledTimes(2);
+    // Attempt identifiers are only used locally, not sent as analytics dimensions.
+    expect(mockGtag.mock.calls[1][2]).not.toHaveProperty("attempt_id");
+    expect(mockGtag.mock.calls[1][2]).not.toHaveProperty("startedAt");
+  });
+
+  it("does not consume the dedup key before gtag is available", () => {
+    window.gtag = undefined;
+    expect(trackPracticeTestComplete(completionParams, "attempt-1")).toBe(false);
+    window.gtag = mockGtag;
+    expect(trackPracticeTestComplete(completionParams, "attempt-1")).toBe(true);
+    expect(trackPracticeTestComplete(completionParams, "attempt-1")).toBe(false);
+    expect(mockGtag).toHaveBeenCalledTimes(1);
+  });
+
+  it("does not consume the dedup key during server rendering", () => {
+    const browserWindow = globalThis.window;
+    vi.stubGlobal("window", undefined);
+    try {
+      expect(trackPracticeTestComplete(completionParams, "attempt-1")).toBe(false);
+    } finally {
+      vi.stubGlobal("window", browserWindow);
+    }
+    expect(trackPracticeTestComplete(completionParams, "attempt-1")).toBe(true);
+    expect(mockGtag).toHaveBeenCalledTimes(1);
+  });
+
+  it("fires practice_test_complete only once per attempt", () => {
     const params = {
       test_id: "practice-test-1",
       test_name: "Test 1",
@@ -80,11 +129,11 @@ describe("dedup guard", () => {
       domains_attempted: "measurement,assessment",
     };
 
-    const firstFire = trackPracticeTestComplete(params);
+    const firstFire = trackPracticeTestComplete(params, "attempt-1");
     expect(firstFire).toBe(true);
     expect(mockGtag).toHaveBeenCalledTimes(1);
 
-    const secondFire = trackPracticeTestComplete(params);
+    const secondFire = trackPracticeTestComplete(params, "attempt-1");
     expect(secondFire).toBe(false);
     expect(mockGtag).toHaveBeenCalledTimes(1); // not called again
   });
@@ -99,8 +148,8 @@ describe("dedup guard", () => {
       domains_attempted: "measurement",
     };
 
-    trackPracticeTestComplete({ ...base, test_id: "practice-test-1" });
-    trackPracticeTestComplete({ ...base, test_id: "practice-test-2" });
+    trackPracticeTestComplete({ ...base, test_id: "practice-test-1" }, "attempt-1");
+    trackPracticeTestComplete({ ...base, test_id: "practice-test-2" }, "attempt-1");
 
     expect(mockGtag).toHaveBeenCalledTimes(2);
   });
@@ -116,12 +165,12 @@ describe("dedup guard", () => {
       domains_attempted: "measurement,assessment",
     };
 
-    expect(trackMockExamComplete(params)).toBe(true);
-    expect(trackMockExamComplete(params)).toBe(false);
+    expect(trackMockExamComplete(params, "attempt-1")).toBe(true);
+    expect(trackMockExamComplete(params, "attempt-1")).toBe(false);
     expect(mockGtag).toHaveBeenCalledTimes(1);
   });
 
-  it("fires domain_quiz_complete only once per quiz_id", () => {
+  it("fires domain_quiz_complete only once per attempt", () => {
     const params = {
       domain: "measurement",
       quiz_id: "topic-measurement",
@@ -129,8 +178,8 @@ describe("dedup guard", () => {
       question_count: 28,
     };
 
-    expect(trackDomainQuizComplete(params)).toBe(true);
-    expect(trackDomainQuizComplete(params)).toBe(false);
+    expect(trackDomainQuizComplete(params, "attempt-1")).toBe(true);
+    expect(trackDomainQuizComplete(params, "attempt-1")).toBe(false);
     expect(mockGtag).toHaveBeenCalledTimes(1);
   });
 
@@ -157,11 +206,11 @@ describe("dedup guard", () => {
       domains_attempted: "measurement",
     };
 
-    trackPracticeTestComplete(params);
+    trackPracticeTestComplete(params, "attempt-1");
     expect(mockGtag).toHaveBeenCalledTimes(1);
 
     _resetFiredEvents();
-    trackPracticeTestComplete(params);
+    trackPracticeTestComplete(params, "attempt-1");
     expect(mockGtag).toHaveBeenCalledTimes(2);
   });
 });
@@ -169,6 +218,14 @@ describe("dedup guard", () => {
 // ─── Non-deduped events ──────────────────────────────────────
 
 describe("non-deduped events", () => {
+  it("reports mock answers separately from practice answers", () => {
+    const params = {
+      test_id: "mock-exam", question_number: 1, domain: "measurement", is_correct: true,
+    };
+    trackMockExamQuestionAnswered(params);
+    expect(mockGtag).toHaveBeenCalledExactlyOnceWith("event", "mock_exam_question_answered", params);
+  });
+
   it("trackPracticeTestStart fires every time", () => {
     const params = {
       test_id: "practice-test-1",

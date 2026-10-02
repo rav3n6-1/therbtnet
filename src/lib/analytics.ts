@@ -21,7 +21,7 @@ declare global {
 // ─── Dedup Guard ─────────────────────────────────────────────
 
 /**
- * Tracks which one-shot events have already been fired this session.
+ * Tracks one-shot events handed to gtag during this page's lifetime.
  * Keyed on `${eventName}__${uniqueId}` to prevent rerender-driven duplicates.
  */
 const firedEvents = new Set<string>();
@@ -35,9 +35,9 @@ function makeDedupKey(eventName: string, uniqueId: string): string {
 /**
  * Send a custom GA4 event. Safely no-ops during SSR or if gtag is unavailable.
  */
-export function trackEvent(name: string, params?: GtagEventParams): void {
-  if (typeof window === "undefined") return;
-  if (typeof window.gtag !== "function") return;
+export function trackEvent(name: string, params?: GtagEventParams): boolean {
+  if (typeof window === "undefined") return false;
+  if (typeof window.gtag !== "function") return false;
 
   // Strip undefined values
   const cleanParams: Record<string, string | number | boolean> = {};
@@ -54,11 +54,12 @@ export function trackEvent(name: string, params?: GtagEventParams): void {
   }
 
   window.gtag("event", name, cleanParams);
+  return true;
 }
 
 /**
  * Fire a one-shot event that should only be sent once per unique ID.
- * Returns true if the event was fired, false if it was already sent.
+ * Returns true when handed to gtag, false when unavailable or already sent.
  */
 function trackOnce(
   name: string,
@@ -72,12 +73,15 @@ function trackOnce(
     }
     return false;
   }
+  if (!trackEvent(name, params)) return false;
   firedEvents.add(key);
-  trackEvent(name, params);
   return true;
 }
 
 // ─── Practice Test Events ────────────────────────────────────
+
+// Completion helpers require an attempt identifier (the saved quiz's startedAt).
+// It is used only for local deduplication and is not sent to GA4.
 
 export function trackPracticeTestStart(params: {
   test_id: string;
@@ -104,8 +108,8 @@ export function trackPracticeTestComplete(params: {
   correct_answers: number;
   duration_seconds: number;
   domains_attempted: string;
-}): boolean {
-  return trackOnce("practice_test_complete", params.test_id, params);
+}, attemptId: string): boolean {
+  return trackOnce("practice_test_complete", JSON.stringify([params.test_id, attemptId]), params);
 }
 
 // ─── Mock Exam Events ────────────────────────────────────────
@@ -118,6 +122,15 @@ export function trackMockExamStart(params: {
   trackEvent("mock_exam_start", params);
 }
 
+export function trackMockExamQuestionAnswered(params: {
+  test_id: string;
+  question_number: number;
+  domain: string;
+  is_correct: boolean;
+}): void {
+  trackEvent("mock_exam_question_answered", params);
+}
+
 export function trackMockExamComplete(params: {
   test_id: string;
   test_name: string;
@@ -126,8 +139,8 @@ export function trackMockExamComplete(params: {
   correct_answers: number;
   duration_seconds: number;
   domains_attempted: string;
-}): boolean {
-  return trackOnce("mock_exam_complete", params.test_id, params);
+}, attemptId: string): boolean {
+  return trackOnce("mock_exam_complete", JSON.stringify([params.test_id, attemptId]), params);
 }
 
 // ─── Domain / Topic Quiz Events ──────────────────────────────
@@ -145,8 +158,8 @@ export function trackDomainQuizComplete(params: {
   quiz_id: string;
   score_percent: number;
   question_count: number;
-}): boolean {
-  return trackOnce("domain_quiz_complete", params.quiz_id, params);
+}, attemptId: string): boolean {
+  return trackOnce("domain_quiz_complete", JSON.stringify([params.quiz_id, attemptId]), params);
 }
 
 // ─── Readiness Feature Events ────────────────────────────────
