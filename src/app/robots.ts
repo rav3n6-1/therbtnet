@@ -1,4 +1,5 @@
 import type { MetadataRoute } from 'next';
+import { SITE_URL } from '@/data/navigation';
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -12,6 +13,6 @@ export default function robots(): MetadataRoute.Robots {
         allow: '/',
       },
     ],
-    sitemap: 'https://therbt.net/sitemap.xml',
+    sitemap: `${SITE_URL}/sitemap.xml`,
   };
 }

@@ -42,7 +42,7 @@ export const footerNav: NavItem[] = [
 ];
 
 export const SITE_NAME = "TheRBT.net";
-export const SITE_URL = "https://therbt.net";
+export const SITE_URL = "https://www.therbt.net";
 
 export const SHORT_DISCLAIMER =
   "Independent study resource. Not affiliated with or endorsed by the BACB®. Practice questions are original and are not official BACB exam items.";
