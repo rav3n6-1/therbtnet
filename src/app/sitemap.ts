@@ -2,8 +2,7 @@ import type { MetadataRoute } from 'next';
 import { exams } from '@/data/exams';
 import { studyGuides } from '@/data/studyGuides';
 import { topics } from '@/data/topics';
-
-const BASE_URL = 'https://therbt.net';
+import { SITE_URL } from '@/data/navigation';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date();
@@ -27,7 +26,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/terms',
     '/disclaimer',
   ].map((route) => ({
-    url: `${BASE_URL}${route}`,
+    url: `${SITE_URL}${route}`,
     lastModified,
     changeFrequency: 'weekly' as const,
     priority: route === '' ? 1.0 : 0.8,
@@ -37,7 +36,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const practiceTestRoutes = exams
     .filter((e) => e.mode === 'practice')
     .map((e) => ({
-      url: `${BASE_URL}/practice-tests/${e.slug}`,
+      url: `${SITE_URL}/practice-tests/${e.slug}`,
       lastModified,
       changeFrequency: 'weekly' as const,
       priority: 0.8,
@@ -45,7 +44,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   // Study Guide detail pages
   const studyGuideRoutes = studyGuides.map((s) => ({
-    url: `${BASE_URL}/study-guide/${s.slug}`,
+    url: `${SITE_URL}/study-guide/${s.slug}`,
     lastModified,
     changeFrequency: 'weekly' as const,
     priority: 0.8,
@@ -53,7 +52,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   // Topic Quiz detail pages
   const topicQuizRoutes = topics.map((t) => ({
-    url: `${BASE_URL}/topic-quizzes/${t.slug}`,
+    url: `${SITE_URL}/topic-quizzes/${t.slug}`,
     lastModified,
     changeFrequency: 'weekly' as const,
     priority: 0.8,

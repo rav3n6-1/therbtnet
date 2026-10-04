@@ -162,7 +162,7 @@ describe("Robots Configuration Integrity", () => {
     expect(generalRule).toBeDefined();
     expect(generalRule?.allow).toBe("/");
 
-    expect(robotsConfig.sitemap).toBe("https://therbt.net/sitemap.xml");
+    expect(robotsConfig.sitemap).toBe("https://www.therbt.net/sitemap.xml");
   });
 });
 
@@ -174,12 +174,12 @@ describe("Sitemap Configuration Integrity", () => {
     expect(sitemapEntries.length).toBeGreaterThan(20);
 
     const urls = sitemapEntries.map((entry) => entry.url);
-    expect(urls).toContain("https://therbt.net");
-    expect(urls).toContain("https://therbt.net/practice-tests");
-    expect(urls).toContain("https://therbt.net/mock-exam");
-    expect(urls).toContain("https://therbt.net/study-guide");
-    expect(urls).toContain("https://therbt.net/practice-tests/practice-test-1");
-    expect(urls).toContain("https://therbt.net/study-guide/measurement");
-    expect(urls).toContain("https://therbt.net/topic-quizzes/measurement");
+    expect(urls).toContain("https://www.therbt.net");
+    expect(urls).toContain("https://www.therbt.net/practice-tests");
+    expect(urls).toContain("https://www.therbt.net/mock-exam");
+    expect(urls).toContain("https://www.therbt.net/study-guide");
+    expect(urls).toContain("https://www.therbt.net/practice-tests/practice-test-1");
+    expect(urls).toContain("https://www.therbt.net/study-guide/measurement");
+    expect(urls).toContain("https://www.therbt.net/topic-quizzes/measurement");
   });
 });
