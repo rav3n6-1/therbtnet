@@ -7,9 +7,9 @@ import Breadcrumbs from '@/components/Breadcrumbs';
 import { buildMetadata } from '@/lib/seo';
 
 export const metadata: Metadata = buildMetadata({
-  title: 'RBT Mock Exam Simulator | Timed Practice',
+  title: 'Free RBT Mock Exam Simulator 2026 | 85 Questions',
   description:
-    'Test your behavior analysis skills with our free, independent mock exam. Includes a timed limit and detailed conceptual explanations.',
+    'Take a free 85-question RBT mock exam with a 90-minute timer, readiness score, topic breakdowns, and detailed explanations. Independent practice.',
   path: '/mock-exam',
 });
 
@@ -39,10 +39,10 @@ export default function MockExamPage() {
 
       <div className="space-y-4">
         <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white">
-          RBT Mock Exam Simulator
+          Free RBT Mock Exam Simulator: 85 Practice Questions
         </h1>
         <p className="text-sm sm:text-base text-slate-500 dark:text-slate-400 max-w-2xl leading-relaxed">
-          Simulate the exam under timed conditions. The official RBT exam consists of 85 questions, but this simulator currently uses a representative, scaled subset of {questionCount} practice items. You will have 90 minutes to complete the test. This is an independent practice tool — not an official certification exam.
+          Simulate the exam under timed conditions with {questionCount} original practice questions and a 90-minute limit. Complete the session to see your readiness score, topic breakdowns, and detailed explanations. This is an independent practice tool — not an official certification exam.
         </p>
       </div>
 
