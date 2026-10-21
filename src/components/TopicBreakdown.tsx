@@ -13,12 +13,16 @@ export default function TopicBreakdown({ breakdown }: TopicBreakdownProps) {
       <h3 className="text-lg font-bold text-slate-900 dark:text-white">Topic Performance Breakdown</h3>
       <div className="space-y-4">
         {sortedBreakdown.map((topic) => {
-          const label = getDomainPerformanceLabel(topic.percentage);
-          const labelColor = getDomainPerformanceLabelColor(label);
+          const incomplete = topic.answered !== undefined && topic.answered < topic.total;
+          const performanceLabel = getDomainPerformanceLabel(topic.percentage);
+          const label = topic.answered === 0 ? 'Not attempted' : incomplete ? 'Incomplete' : performanceLabel;
+          const labelColor = incomplete
+            ? 'text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-slate-800'
+            : getDomainPerformanceLabelColor(performanceLabel);
           
           return (
             <div key={topic.topicSlug} className="space-y-1.5">
-              <div className="flex items-center justify-between text-sm">
+              <div className="flex flex-wrap items-center justify-between gap-2 text-sm">
                 <span className="font-medium text-slate-700 dark:text-slate-300">{topic.topicTitle}</span>
                 <div className="flex items-center gap-3">
                   <span className="font-bold text-slate-900 dark:text-white">
