@@ -170,6 +170,8 @@ export interface QuizResult {
   examSlug: string;
   score: number;
   totalQuestions: number;
+  /** Optional for compatibility with results saved before answer counts were recorded. */
+  answeredQuestions?: number;
   percentage: number;
   topicBreakdown: TopicScore[];
   completedAt: string;
@@ -181,5 +183,6 @@ export interface TopicScore {
   topicTitle: string;
   correct: number;
   total: number;
+  answered?: number;
   percentage: number;
 }

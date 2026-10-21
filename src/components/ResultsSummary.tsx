@@ -10,6 +10,7 @@ import {
   calculateDomainScores,
   getWeakestDomains,
   MIN_QUESTIONS_FOR_CONFIDENCE,
+  MIN_DOMAIN_ATTEMPTS,
 } from '@/lib/readiness';
 import { loadProgress } from '@/lib/storage';
 import { trackReadinessScoreView, trackWeakDomainRecommendationClick } from '@/lib/analytics';
@@ -26,13 +27,14 @@ export default function ResultsSummary({
   onReviewAnswers,
 }: ResultsSummaryProps) {
   const analyticsTrackedRef = useRef(false);
-  const [accumulatedReady, setAccumulatedReady] = useState(false);
+  const answeredQuestions = result.answeredQuestions ?? result.totalQuestions;
+  const unansweredQuestions = result.totalQuestions - answeredQuestions;
   
   // Convert current quiz result to domain format
   const domainsRecord: Record<string, { attempted: number; correct: number; percentage: number }> = {};
   result.topicBreakdown.forEach((tb) => {
     domainsRecord[tb.topicSlug] = {
-      attempted: tb.total,
+      attempted: tb.answered ?? tb.total,
       correct: tb.correct,
       percentage: tb.percentage,
     };
@@ -40,33 +42,20 @@ export default function ResultsSummary({
   const domainScores = calculateDomainScores(domainsRecord);
   const weakDomains = getWeakestDomains(domainScores, 2);
 
-  const [readinessData, setReadinessData] = useState(() => {
+  const [readinessData] = useState(() => {
+    // QuizEngine saves progress before mounting the results view.
+    const progress = loadProgress();
+    if (progress && progress.totalQuestionsAnswered > 0) {
+      return calculateOverallReadiness(progress);
+    }
     return calculateOverallReadiness({
-      totalQuestionsAnswered: result.totalQuestions,
+      totalQuestionsAnswered: answeredQuestions,
       totalCorrect: result.score,
     });
   });
 
   useEffect(() => {
-    // Load accumulated progress on mount
-    const progress = loadProgress();
-
-    if (progress && progress.totalQuestionsAnswered > 0) {
-      const accumulated = calculateOverallReadiness({
-        totalQuestionsAnswered: progress.totalQuestionsAnswered,
-        totalCorrect: progress.totalCorrect,
-      });
-      setReadinessData(accumulated);
-
-      if (!analyticsTrackedRef.current) {
-        trackReadinessScoreView({
-          readiness_score: accumulated.score,
-          questions_used: accumulated.totalAnswered,
-          weakest_domain: weakDomains[0]?.domainSlug || 'none',
-        });
-        analyticsTrackedRef.current = true;
-      }
-    } else if (!analyticsTrackedRef.current) {
+    if (!analyticsTrackedRef.current) {
       trackReadinessScoreView({
         readiness_score: readinessData.score,
         questions_used: readinessData.totalAnswered,
@@ -75,32 +64,46 @@ export default function ResultsSummary({
       analyticsTrackedRef.current = true;
     }
 
-    setAccumulatedReady(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <div className="space-y-8 animate-fade-in">
+      <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-8 shadow-sm text-center">
+        <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-4">
+          This session&apos;s score
+        </h2>
+        <p className="text-6xl font-extrabold text-slate-900 dark:text-white">{result.percentage}%</p>
+        <p className="mt-3 text-slate-700 dark:text-slate-300">{result.score} correct out of {result.totalQuestions} questions.</p>
+        <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">{answeredQuestions} answered · {unansweredQuestions} unanswered</p>
+        {unansweredQuestions > 0 && (
+          <p className="mt-3 text-sm font-medium text-amber-700 dark:text-amber-400">
+            Incomplete session: unanswered questions earn no credit in this score. Review them before trying another session.
+          </p>
+        )}
+      </div>
       {/* Hero Readiness Card */}
       <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-8 shadow-sm text-center">
         <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-6">
-          Your RBT Readiness
+          Practice accuracy across saved sessions
         </h2>
         
         <div className="flex flex-col items-center justify-center gap-2 mb-4">
-          <span className="text-7xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+          <span className="text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
             {readinessData.score}%
           </span>
-          <span className={`text-xl font-bold ${readinessData.band.colorClass}`}>
-            {readinessData.band.label}
-          </span>
+          {!readinessData.isEarlyEstimate && (
+            <span className={`text-xl font-bold ${readinessData.band.colorClass}`}>
+              {readinessData.band.label}
+            </span>
+          )}
         </div>
 
         <p className="text-sm text-slate-600 dark:text-slate-400 max-w-md mx-auto mb-6">
-          Based on {readinessData.totalAnswered} questions.
+          Based on {readinessData.totalAnswered} answered questions across your saved practice. This is separate from the session score above.
           {readinessData.isEarlyEstimate && (
              <span className="block mt-1 font-medium text-amber-600 dark:text-amber-500">
-               Early estimate: Complete at least {MIN_QUESTIONS_FOR_CONFIDENCE} questions for higher confidence.
+               More answers needed: answer at least {MIN_QUESTIONS_FOR_CONFIDENCE} questions before a readiness band is shown.
              </span>
           )}
         </p>
@@ -145,10 +148,12 @@ export default function ResultsSummary({
       ) : (
         <div className="rounded-2xl border border-emerald-200 dark:border-emerald-900/50 bg-emerald-50/50 dark:bg-emerald-950/20 p-6 shadow-sm text-center">
           <h3 className="text-sm font-semibold text-emerald-600 dark:text-emerald-500 uppercase tracking-wider mb-2">
-            You're doing great!
+            Keep building your practice history
           </h3>
           <p className="text-slate-700 dark:text-slate-300">
-            No specific weak areas detected right now. Keep up the good work!
+            {domainScores.some((domain) => domain.attempted >= MIN_DOMAIN_ATTEMPTS)
+              ? 'No weak areas identified among topics with enough answers in this session. Keep practising across all topics.'
+              : `Answer at least ${MIN_DOMAIN_ATTEMPTS} questions in a topic before we recommend areas to review.`}
           </p>
         </div>
       )}
