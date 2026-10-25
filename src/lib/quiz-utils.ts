@@ -16,15 +16,20 @@ export function calculateResults(
   startedAt: string
 ): QuizResult {
   let correctCount = 0;
-  const topicMap = new Map<string, { correct: number; total: number }>();
+  let answeredCount = 0;
+  const topicMap = new Map<string, { correct: number; total: number; answered: number }>();
 
   for (let i = 0; i < questions.length; i++) {
     const q = questions[i];
     const a = answers[i];
 
     // Track per-topic
-    const current = topicMap.get(q.topicSlug) ?? { correct: 0, total: 0 };
+    const current = topicMap.get(q.topicSlug) ?? { correct: 0, total: 0, answered: 0 };
     current.total += 1;
+    if (a?.selectedChoiceId != null) {
+      answeredCount += 1;
+      current.answered += 1;
+    }
 
     if (a?.selectedChoiceId === q.correctChoiceId) {
       correctCount += 1;
@@ -40,6 +45,7 @@ export function calculateResults(
       topicTitle: topics.find((t) => t.slug === slug)?.title ?? slug,
       correct: data.correct,
       total: data.total,
+      answered: data.answered,
       percentage: data.total > 0 ? Math.round((data.correct / data.total) * 100) : 0,
     })
   );
@@ -53,6 +59,7 @@ export function calculateResults(
     examSlug,
     score: correctCount,
     totalQuestions: questions.length,
+    answeredQuestions: answeredCount,
     percentage: questions.length > 0 ? Math.round((correctCount / questions.length) * 100) : 0,
     topicBreakdown,
     completedAt: now,
